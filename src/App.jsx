@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import './App.css';
+import styles from './App.module.css';
 
 function App() {
-	return <div className="App"></div>;
+	return <div className={styles.container}>main</div>;
 }
 
 export default App;
