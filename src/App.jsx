@@ -1,10 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './App.module.css';
-import dotenv from 'dotenv';
-dotenv.config();
+import { Wrapper, Status } from '@googlemaps/react-wrapper';
+import Map from './Map';
 
 function App() {
-	return <div className={styles.container}>main</div>;
+	const status = Status;
+	const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+	const render = (status) => {
+		<h1>{status}</h1>;
+	};
+
+	const [zoom, setZoom] = useState(11);
+	const [center, setCenter] = useState({ lat: 57.7177, lng: 11.9727 });
+
+	return (
+		<div className={styles.container}>
+			<Wrapper apiKey={API_KEY} render={render}>
+				<Map center={center} zoom={zoom} />
+			</Wrapper>
+		</div>
+	);
 }
 
 export default App;
