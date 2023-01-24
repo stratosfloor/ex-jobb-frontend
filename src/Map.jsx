@@ -2,16 +2,24 @@ import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 
 function Map({ center, zoom }) {
+	const API_URL = 'http://localhost:8080/api/locations';
 	const ref = useRef(null);
 	const [map, setMap] = useState();
-	const [marker, setMarker] = useState({
-		lat: 57.682606003178826,
-		lng: 11.983962371493599,
-	});
+	const [markers, setMarkers] = useState([]);
 	const mossen = {
 		lat: 57.682606003178826,
 		lng: 11.983962371493599,
 	};
+
+	const fetchAllLocations = () => {
+		axios.get(API_URL).then((response) => {
+			setMarkers(response.data);
+			console.log(markers);
+		});
+	};
+	useEffect(() => {
+		fetchAllLocations();
+	}, []);
 
 	const addMarker = (location) => {
 		const marker = new google.maps.Marker({
@@ -23,6 +31,7 @@ function Map({ center, zoom }) {
 			// }
 		});
 	};
+
 	addMarker(mossen);
 	useEffect(addMarker, []);
 
