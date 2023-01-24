@@ -17,6 +17,7 @@ function App() {
 		<div className={styles.container}>
 			<Wrapper apiKey={API_KEY} render={render}>
 				<Map center={center} zoom={zoom} />
+				<div className={styles.content}>this is content side</div>
 			</Wrapper>
 		</div>
 	);

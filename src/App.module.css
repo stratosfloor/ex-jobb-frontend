@@ -1,6 +1,13 @@
 .container {
+	display: flex;
 	background-color: lightgrey;
 	width: 860px;
 	height: 480px;
 	margin: 0 auto;
+}
+
+.content {
+	background-color: lightgreen;
+	height: 480px;
+	width: 50%;
 }
