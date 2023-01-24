@@ -14,7 +14,6 @@ function Map({ center, zoom }) {
 	const fetchAllLocations = () => {
 		axios.get(API_URL).then((response) => {
 			setMarkers(response.data);
-			console.log(markers);
 		});
 	};
 	useEffect(() => {
@@ -26,14 +25,29 @@ function Map({ center, zoom }) {
 			position: location,
 			map: map,
 			// icon: {
-			//   path: google.maps.SymbolPath.CIRCLE,
-			//   scale: 10,
-			// }
+			// 	path: google.maps.SymbolPath.CIRCLE,
+			// 	scale: 10,
+			// },
+		});
+		marker.addListener('click', () => {
+			console.log('click');
 		});
 	};
 
-	addMarker(mossen);
-	useEffect(addMarker, []);
+	const addAllMarkers = (markers) => {
+		markers.map((marker) => {
+			const location = { lat: marker.x, lng: marker.y };
+			console.log(location);
+			console.log(mossen);
+			addMarker(location);
+			addMarker(mossen);
+		});
+	};
+
+	//addMarker(mossen);
+	useEffect(() => {
+		addAllMarkers(markers);
+	}, [markers]);
 
 	useEffect(() => {
 		if (ref.current && !map) {
