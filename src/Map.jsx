@@ -21,30 +21,44 @@ function Map({ center, zoom }) {
 	}, []);
 
 	const addMarker = (location) => {
+		// INFOWINDOW
+		const infowindow = new google.maps.InfoWindow({
+			minWidth: 250,
+			content: '<p>Add you popup content here</p>',
+		});
+
 		const marker = new google.maps.Marker({
 			position: location,
 			map: map,
-			// icon: {
-			// 	path: google.maps.SymbolPath.CIRCLE,
-			// 	scale: 10,
-			// },
+			title: 'titel', //pizziers namn
+			// content:
 		});
 		marker.addListener('click', () => {
 			console.log('click');
+			infowindow.setContent(
+				'<p>THIS IS A EDITED STRING<br>' +
+					location.lat +
+					'<br>' +
+					location.lng +
+					'</p>'
+			);
+			infowindow.open(map, marker);
+		});
+		google.maps.event.addListener(map, 'click', () => {
+			infowindow.close();
 		});
 	};
 
 	const addAllMarkers = (markers) => {
 		markers.map((marker) => {
 			const location = { lat: marker.x, lng: marker.y };
-			console.log(location);
-			console.log(mossen);
+			// console.log(location);
+			// console.log(mossen);
 			addMarker(location);
 			addMarker(mossen);
 		});
 	};
 
-	//addMarker(mossen);
 	useEffect(() => {
 		addAllMarkers(markers);
 	}, [markers]);
