@@ -55,8 +55,8 @@ function Map({ center, zoom }) {
 			// console.log(location);
 			// console.log(mossen);
 			addMarker(location);
-			addMarker(mossen);
 		});
+		addMarker(mossen);
 	};
 
 	useEffect(() => {
@@ -82,7 +82,7 @@ function Map({ center, zoom }) {
 		}
 	}, [ref, map]);
 
-	return <div ref={ref} style={{ height: 480, width: 480 }} />;
+	return <div ref={ref} style={{ height: 480, width: '50%' }} />;
 }
 
 export default Map;
