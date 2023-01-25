@@ -21,6 +21,15 @@ function Map({ center, zoom }) {
 	}, []);
 
 	const addMarker = (location) => {
+		// Check bounderies for markers,
+		// I.E. latitud [-90, 90]
+		// and longitid [-180, 180]
+		if (!(location.lat > -90 || location.lat < 90)) {
+			return;
+		}
+		if (!(location.lng > -180 || location.lng < 180)) {
+			return;
+		}
 		// INFOWINDOW
 		const infowindow = new google.maps.InfoWindow({
 			minWidth: 250,
@@ -30,7 +39,6 @@ function Map({ center, zoom }) {
 		const marker = new google.maps.Marker({
 			position: location,
 			map: map,
-			title: 'titel', //pizziers namn
 			// content:
 		});
 		marker.addListener('click', () => {
@@ -42,11 +50,13 @@ function Map({ center, zoom }) {
 					location.lng +
 					'</p>'
 			);
+
 			infowindow.open(map, marker);
 		});
-		google.maps.event.addListener(map, 'click', () => {
-			infowindow.close();
-		});
+		// TODO: infowindow.clost() seems to be bugging when building page first time
+		// map.addListener('click', () => {
+		// 	infowindow.close();
+		// });
 	};
 
 	const addAllMarkers = (markers) => {
@@ -58,7 +68,6 @@ function Map({ center, zoom }) {
 		});
 		addMarker(mossen);
 	};
-
 	useEffect(() => {
 		addAllMarkers(markers);
 	}, [markers]);
