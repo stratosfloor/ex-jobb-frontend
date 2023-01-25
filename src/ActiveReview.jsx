@@ -1,7 +1,8 @@
 import styles from './ActiveReview.module.css';
 
-const ActiveReview = () => {
-	return <div className={styles.container}>ACTIVE REVIEW</div>;
+const ActiveReview = ({ ActiveReview }) => {
+	// console.log(ActiveReview);
+	return <div className={styles.container}></div>;
 };
 
 export default ActiveReview;

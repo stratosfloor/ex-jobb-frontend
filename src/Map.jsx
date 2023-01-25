@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 
-function Map({ center, zoom, onClickMarker: onClickMarkerSetActive }) {
+function Map({ center, zoom, onClickMarkerFetchReviewSetActive }) {
 	const API_URL = 'http://localhost:8080/api/locations';
 	const ref = useRef(null);
 	const [map, setMap] = useState();
@@ -37,8 +37,7 @@ function Map({ center, zoom, onClickMarker: onClickMarkerSetActive }) {
 
 		// LISTENER ON MARKER
 		marker.addListener('click', () => {
-			console.log('click');
-			onClickMarkerSetActive(position);
+			onClickMarkerFetchReviewSetActive(position);
 			infowindow.setContent(
 				'<p>Du är här<br>' + position.lat + '<br>' + position.lng + '</p>'
 			);
