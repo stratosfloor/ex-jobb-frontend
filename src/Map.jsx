@@ -6,10 +6,6 @@ function Map({ center, zoom }) {
 	const ref = useRef(null);
 	const [map, setMap] = useState();
 	const [markers, setMarkers] = useState([]);
-	const mossen = {
-		lat: 57.682606003178826,
-		lng: 11.983962371493599,
-	};
 
 	const fetchAllLocations = () => {
 		axios.get(API_URL).then((response) => {
@@ -20,54 +16,42 @@ function Map({ center, zoom }) {
 		fetchAllLocations();
 	}, []);
 
-	const addMarker = (location) => {
+	const addMarker = (position) => {
 		// Check bounderies for markers,
 		// I.E. latitud [-90, 90]
 		// and longitid [-180, 180]
-		if (!(location.lat > -90 || location.lat < 90)) {
+		if (!(position.lat > -90 || position.lat < 90)) {
 			return;
 		}
-		if (!(location.lng > -180 || location.lng < 180)) {
+		if (!(position.lng > -180 || position.lng < 180)) {
 			return;
 		}
 		// INFOWINDOW
-		const infowindow = new google.maps.InfoWindow({
-			minWidth: 250,
-			content: '<p>Add you popup content here</p>',
+		const infowindow = new google.maps.InfoWindow({});
+
+		// MARKER
+		const marker = new google.maps.Marker({
+			position,
+			map,
 		});
 
-		const marker = new google.maps.Marker({
-			position: location,
-			map: map,
-			// content:
-		});
+		// LISTENER ON MARKER
 		marker.addListener('click', () => {
 			console.log('click');
 			infowindow.setContent(
-				'<p>THIS IS A EDITED STRING<br>' +
-					location.lat +
-					'<br>' +
-					location.lng +
-					'</p>'
+				'<p>Du är här<br>' + position.lat + '<br>' + position.lng + '</p>'
 			);
-
 			infowindow.open(map, marker);
 		});
-		// TODO: infowindow.clost() seems to be bugging when building page first time
-		// map.addListener('click', () => {
-		// 	infowindow.close();
-		// });
 	};
 
 	const addAllMarkers = (markers) => {
 		markers.map((marker) => {
-			const location = { lat: marker.x, lng: marker.y };
-			// console.log(location);
-			// console.log(mossen);
-			addMarker(location);
+			const position = { lat: marker.x, lng: marker.y };
+			addMarker(position);
 		});
-		addMarker(mossen);
 	};
+
 	useEffect(() => {
 		addAllMarkers(markers);
 	}, [markers]);
