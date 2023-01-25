@@ -18,10 +18,14 @@ function App() {
 
 	const onClickMarkerFetchReviewSetActive = (position) => {
 		const URL = `http://localhost:8080/api/locations/reviews?lat=${position.lat}&lng=${position.lng}`;
-		axios.get(URL).then((response) => {
-			setActiveReview(response.data);
-			//console.log(response.data);
-		});
+		axios
+			.get(URL)
+			.then((response) => {
+				setActiveReview(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	return (
