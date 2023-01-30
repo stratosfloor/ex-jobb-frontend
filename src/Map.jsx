@@ -27,6 +27,7 @@ function Map({ center, zoom, onClickMarkerFetchReviewSetActive }) {
 			return;
 		}
 		// INFOWINDOW
+		// this will not be used
 		const infowindow = new google.maps.InfoWindow({});
 
 		// MARKER
@@ -41,7 +42,7 @@ function Map({ center, zoom, onClickMarkerFetchReviewSetActive }) {
 			infowindow.setContent(
 				'<p>Du är här<br>' + position.lat + '<br>' + position.lng + '</p>'
 			);
-			infowindow.open(map, marker);
+			//infowindow.open(map, marker);
 		});
 	};
 
